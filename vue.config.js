@@ -14,7 +14,10 @@ module.exports = {
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'sass',
-      patterns: [path.resolve(__dirname, './src/styles/mixins.sass')],
+      patterns: [
+        path.resolve(__dirname, './src/styles/mixins.sass'),
+        path.resolve(__dirname, './src/styles/vars.sass'),
+      ],
     },
   },
 };

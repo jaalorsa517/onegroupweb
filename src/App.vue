@@ -1,14 +1,48 @@
 <template lang="pug">
   #app.app
+    v-header
     router-view
 </template>
 
+<script>
+import vHeader from '@/components/VHeader';
+
+export default {
+  name: 'appOnegroup',
+  components: {
+    vHeader,
+  },
+};
+</script>
+
 <style lang="sass">
+*
+  margin: 0
+  padding: 0
+h1
+  font-size: 3rem
+h2
+  font-size: 2.44rem
+h3
+  font-size: 1.95rem
+h4
+  font-size: 1.56rem
+
+p, a
+  font-size: 1rem
+  color: $color-font
+
+input
+  padding: 10px
+  margin-bottom: 15px
+  border-radius: 10px
+  color: $color-font
+  border: none
+  +shadowBox
+  &:focus
+    outline: none
+
 .app
   font-family: Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  text-align: center
-  // color: #2c3e50
   color: $color-font
 </style>
