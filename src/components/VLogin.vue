@@ -2,10 +2,20 @@
   form.form-container
     .form--msg(v-show="msgEmpty") {{msg}}
     h2.form--title Iniciar sesión
-    input.form--input.input(v-model="email" name="email" type="email" placeholder="Correo")
-    input.form--input.input(v-model="password" name="password" type="password" placeholder="Contraseña")
+    input.form--input.input(
+      v-model="email" 
+      name="email" 
+      type="email" 
+      placeholder="Correo"
+    )
+    input.form--input.input(
+      v-model="password" 
+      name="password" 
+      type="password" 
+      placeholder="Contraseña"/* webpackChunkName: "about" */ 
+    )
     button.form--button.button(@click.prevent="onClick") Aceptar
-    a.form--link.link(href="#") Registrarse
+    a.form--link.link(href="#" @click.prevent="$emit('toLink')") Registrarse
 </template>
 
 <script>
@@ -28,7 +38,7 @@ export default {
     onClick: function() {
       isFill(this.email) && isFill(this.password)
         ? isEmail(this.email)
-          ? $emit('submit')
+          ? this.$emit('submit')
           : this.setMsg('El correo es inválido')
         : this.setMsg('No pueden existir datos vacíos');
     },
