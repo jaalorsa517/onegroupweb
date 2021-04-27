@@ -66,7 +66,12 @@ export default {
         ? isEmail(this.email)
           ? isLarge(this.password)
             ? isEquals(this.password, this.password2)
-              ? $emit('submit')
+              ? this.$emit('submit', {
+                  name: this.name,
+                  lastName: this.lastName,
+                  email: this.email,
+                  password: this.password,
+                })
               : this.setMsg('Las contraseñas no coinciden')
             : this.setMsg('La contraseña debe ser de 8 caracteres o más')
           : this.setMsg('El correo es inválido')
