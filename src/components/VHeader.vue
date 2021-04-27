@@ -1,9 +1,13 @@
 <template lang="pug">
 header.header-container
-  router-link(to="/").header__logo
+  router-link(to="/" v-animate-css="animated.tada").header__logo
     img.header--logo(v-lazy="require('@/assets/logo-one-group.png')")
-  .header__user(v-if="$store.state.token !== ''")
-    a.header--close(href="#" @click.prevent="onClick") Cerrar sesión
+  .header__user(v-if="$store.getters.getToken !== ''")
+    a.header--close(
+      href="#" 
+      @click.prevent="onClick"
+      v-animate-css="animated.rubberBand"
+      ) Cerrar sesión
 
     
 </template>
@@ -12,7 +16,14 @@ header.header-container
   export default {
     data: function() {
       return {
-        // srcImg:require('@/assets/logo-one-group.png')
+        animated: {
+          rubberBand: {
+            classes: 'rubberBand',
+          },
+          tada: {
+            classes: 'tada',
+          },
+        },
       };
     },
     methods: {

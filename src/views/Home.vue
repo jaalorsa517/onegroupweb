@@ -3,14 +3,16 @@
     v-login(
       v-if="isLogin" 
       @toLink="onLink"
-      @submit="onSubmit"
+      @submit="onSubmitLogin"
       ref='login'
+      v-animate-css="animated.zoomIn"
     )
     v-signin(
       v-else 
       @toLink="onLink"
-      @submit="onSubmit"
+      @submit="onSubmitSignin"
       ref='signin'
+      v-animate-css="animated.zoomIn"
     )
     
 </template>
@@ -29,38 +31,37 @@
     data: function() {
       return {
         isLogin: true,
+        animated: {
+          zoomIn: {
+            classes: 'zoomIn',
+          },
+        },
       };
     },
     methods: {
       onLink: function() {
         this.isLogin = !this.isLogin;
       },
-      onSubmit: async function(payloads) {
+      onSubmitLogin: async function(payloads) {
+        this.$refs.login._loadingSw();
         try {
-          if (this.isLogin) {
-            this.$refs.login._loadingSw();
-
-            const response = await axios.post('/login', payloads);
-            this.$store.commit('setToken', response.data.token);
-            this.$router.push({name: 'Dashboard', params: {isLogin: true}});
-
-            this.$refs.login._loadingSw();
-          } else {
-            this.$refs.signin._loadingSw();
-
-            const response = await axios.post('/signin', payloads);
-            if (response) this.isLogin = true;
-            this.$refs.signin._loadingSw();
-          }
+          const response = await axios.post('/login', payloads);
+          this.$store.commit('setToken', response.data.token);
+          this.$router.push({name: 'Dashboard', params: {isLogin: true}});
         } catch (err) {
-          if (this.isLogin) {
-            this.$refs.login._loadingSw();
-            this.$refs.login.setMsg(err.response.data.message);
-          } else {
-            this.$refs.signin._loadingSw();
-            this.$refs.signin.setMsg(err.response.data.message);
-          }
+          this.$refs.login.setMsg(err.response.data.message);
         }
+        this.$refs.login._loadingSw();
+      },
+      onSubmitSignin: async function(payloads) {
+        this.$refs.signin._loadingSw();
+        try {
+          const response = await axios.post('/signin', payloads);
+          if (response) this.isLogin = true;
+        } catch (err) {
+          this.$refs.signin.setMsg(err.response.data.message);
+        }
+        this.$refs.signin._loadingSw();
       },
     },
   };

@@ -1,5 +1,5 @@
 <template lang="pug">
-  form.product-form-container.form-container
+  form.product-form-container.form-container(v-animate-css="animated.zoomIn")
     .form--msg(v-show="msgEmpty") {{msg}}
     slot(name="title")
       h2.form--title Crear Producto
@@ -50,6 +50,11 @@
         score: '0',
         msg: '',
         loading: false,
+        animated: {
+          zoomIn: {
+            classes: 'zoomIn',
+          },
+        },
       };
     },
     computed: {

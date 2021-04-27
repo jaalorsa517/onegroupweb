@@ -32,7 +32,6 @@
     },
     filters: {
       priceFilter: function(value) {
-        if (!value) return '';
         value = parseInt(value);
         return value.toLocaleString('es-CO', {
           style: 'currency',
