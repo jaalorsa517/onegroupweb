@@ -14,19 +14,25 @@
       type="password" 
       placeholder="Contraseña"/* webpackChunkName: "about" */ 
     )
-    button.form--button.button(@click.prevent="onClick") Aceptar
+    button.form--button.button(v-if="!loading" @click.prevent="onClick") Aceptar
+    bounce-loader(v-else color="black")
     a.form--link.link(href="#" @click.prevent="$emit('toLink')") Registrarse
 </template>
 
 <script>
   import {isFill, isEmail} from '@/utils/validators';
+  import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
 
   export default {
+    components: {
+      BounceLoader,
+    },
     data: function() {
       return {
         msg: '',
         email: '',
         password: '',
+        loading: false,
       };
     },
     computed: {
@@ -36,6 +42,7 @@
     },
     methods: {
       onClick: function() {
+        this._loadingSw();
         isFill(this.email) && isFill(this.password)
           ? isEmail(this.email)
             ? this.$emit('submit', {
@@ -44,10 +51,14 @@
               })
             : this.setMsg('El correo es inválido')
           : this.setMsg('No pueden existir datos vacíos');
+        this._loadingSw();
       },
       setMsg: function(str) {
         this.msg = str;
         setTimeout(() => (this.msg = ''), 3000);
+      },
+      _loadingSw: function() {
+        this.loading = !this.loading;
       },
     },
   };
@@ -90,7 +101,6 @@
     &:active
       background-color: #fff
       color: $color-font
-      outline: 2px solid $color-font
   .form--link
     &:hover
       color: #4b4b4b

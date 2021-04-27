@@ -6,8 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphYWxvcnNhNTE5QGdtYWlsLmNvbSIsIm5hbWUiOiJKYWltZSIsImxhc3ROYW1lIjoiT3J0aXoiLCJpYXQiOjE2MTk0ODgxMzh9.DtnZJUtDJYWBlh5AarYCUm73VIsEd6P4fdhhvrVZUvg',
+    token: '',
     products: [],
     product: {
       _id: '',
@@ -45,6 +44,9 @@ export default new Vuex.Store({
         img: '',
         score: '',
       };
+    },
+    rebootProducts(state) {
+      state.products = [];
     },
   },
   actions: {

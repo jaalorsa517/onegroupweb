@@ -1,7 +1,7 @@
 <template lang="pug">
   section.Dashboard
     .dashboard--button(@click="onAdd") +
-    .dashboard__cards(v-show="products.length > 0")
+    .dashboard__cards(v-if="products.length > 0")
       v-product-card(
         v-for="product in products"
         :key="product._id"
@@ -11,14 +11,20 @@
         :rating="product.score"
         @click.native="onClick(product)"
       )
+    grid-loader.loader(
+      v-else
+      color="black"
+    )
 </template>
 
 <script>
   import vProductCard from '@/components/VProductCard';
+  import GridLoader from 'vue-spinner/src/GridLoader.vue';
 
   export default {
     components: {
       vProductCard,
+      GridLoader,
     },
     computed: {
       products: function() {
@@ -37,10 +43,15 @@
     created: function() {
       this.$store.dispatch('apiProducts');
     },
+    destroyed: function() {
+      this.$store.commit('rebootProducts');
+    },
   };
 </script>
 
 <style lang="sass">
+  .loader
+    margin: auto
   .Dashboard
     position: relative
   .dashboard__cards

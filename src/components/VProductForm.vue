@@ -27,15 +27,20 @@
       v-model="description"
       )
     slot(name="footer")
-      button.form--button(@click.prevent="onClick") Crear
+      button.form--button(v-if="!loading" @click.prevent="onClick") Crear
+      bounce-loader(v-else color="black")
     
 </template>
 
 <script>
   import {isFill} from '@/utils/validators';
   import axios from '@/services/api';
+  import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
 
   export default {
+    components: {
+      BounceLoader,
+    },
     data: function() {
       return {
         name: '',
@@ -44,6 +49,7 @@
         img: '',
         score: '0',
         msg: '',
+        loading: false,
       };
     },
     computed: {
@@ -65,6 +71,7 @@
     },
     methods: {
       onClick: async function() {
+        this._loadingSw();
         if (this.hashValues) {
           try {
             const response = await axios.post(
@@ -79,6 +86,7 @@
         } else {
           this.setMsg('El nombre, el precio y el puntaje son requeridos');
         }
+        this._loadingSw();
       },
       setValues: function(values) {
         this.name = values.name;
@@ -88,9 +96,11 @@
         this.score = values.score;
       },
       setMsg: function(str) {
-        console.log(str);
         this.msg = str;
         setTimeout(() => (this.msg = ''), 3000);
+      },
+      _loadingSw: function() {
+        this.loading = !this.loading;
       },
     },
     beforeMount: function() {
