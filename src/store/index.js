@@ -10,6 +10,7 @@ export default new Vuex.Store({
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphYWxvcnNhNTE5QGdtYWlsLmNvbSIsIm5hbWUiOiJKYWltZSIsImxhc3ROYW1lIjoiT3J0aXoiLCJpYXQiOjE2MTk0ODgxMzh9.DtnZJUtDJYWBlh5AarYCUm73VIsEd6P4fdhhvrVZUvg',
     products: [],
     product: {
+      _id: '',
       name: '',
       description: '',
       value: '',
@@ -34,6 +35,16 @@ export default new Vuex.Store({
     },
     setProduct(state, payload) {
       state.product = payload;
+    },
+    rebootProduct(state) {
+      state.product = {
+        _id: '',
+        name: '',
+        description: '',
+        value: '',
+        img: '',
+        score: '',
+      };
     },
   },
   actions: {

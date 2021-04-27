@@ -9,6 +9,7 @@
         :title="product.name"
         :price="product.value"
         :rating="product.score"
+        @click.native="onClick(product)"
       )
 </template>
 
@@ -26,6 +27,10 @@
     },
     methods: {
       onAdd: function() {
+        this.$router.push({name: 'Product'});
+      },
+      onClick: function(payload) {
+        this.$store.commit('setProduct', payload);
         this.$router.push({name: 'Product'});
       },
     },

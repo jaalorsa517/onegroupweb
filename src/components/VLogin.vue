@@ -71,6 +71,7 @@
     background-color: $color-back
   .form--title
     margin: 35px 0
+    text-align: center
   .form--button
     margin: 15px auto
     margin-bottom: 20px

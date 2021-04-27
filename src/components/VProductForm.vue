@@ -50,20 +50,26 @@
       msgEmpty: function() {
         return isFill(this.msg);
       },
+      getDatas: function() {
+        return {
+          name: this.name,
+          description: this.description,
+          value: this.value,
+          img: this.img,
+          score: this.score,
+        };
+      },
+      hashValues: function() {
+        return isFill(this.name) && isFill(this.value) && isFill(this.score);
+      },
     },
     methods: {
       onClick: async function() {
-        if (isFill(this.name) && isFill(this.value) && isFill(this.score)) {
+        if (this.hashValues) {
           try {
             const response = await axios.post(
               '/products',
-              {
-                name: this.name,
-                description: this.description,
-                value: this.value,
-                img: this.img,
-                score: this.score,
-              },
+              this.getDatas,
               this.$store.getters.getHeaderToken
             );
             if (response) this.$router.push({name: 'Dashboard'});
@@ -82,9 +88,14 @@
         this.score = values.score;
       },
       setMsg: function(str) {
+        console.log(str);
         this.msg = str;
         setTimeout(() => (this.msg = ''), 3000);
       },
+    },
+    beforeMount: function() {
+      if (isFill(this.$store.getters.getProduct._id))
+        this.setValues(this.$store.getters.getProduct);
     },
   };
 </script>
